@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Signature App</title>
+
+</head>
+<body>
+    <div class="flex flex-col ">
+        <div class='bg-zinc-100 flex justify-center  gap-20 mt-20'>
+            <div class="bg-red-200 ">
+                <p> Text Colour</p>
+                <input  type="color">
+            </div>
+            <div>
+                <p> Background Color</p>
+                <input type="color">
+            </div>
+            <div>
+                <p>Font Size</p>
+                <select name="" id="">
+                    <option value="5">5px</option>
+                    <option value="10">10px</option>
+                    <option value="15">15px</option>
+                    <option value="20">20px</option>
+                    <option value="25">25px</option>
+                </select>
+             </div>
+        </div>
+        <canvas class="border-2" width="500" height="250"></canvas>
+    </div>
+</body>
+</html>
