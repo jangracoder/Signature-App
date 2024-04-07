@@ -8,28 +8,89 @@
 
 </head>
 <body>
-    <div class="flex flex-col ">
-        <div class='bg-zinc-100 flex justify-center  gap-20 mt-20'>
-            <div class="bg-red-200 ">
-                <p> Text Colour</p>
-                <input  type="color">
+    <div class="flex flex-col items-center  gap-10">
+        <div class='flex justify-center gap-20 mt-20'>
+            <div class=" border-2 px-3 py-1 text-center">
+                <p> Choose Text Colour</p>
+                <input class="colorPicker border-2 border-slate-300" type="color" value="#0000" >
             </div>
-            <div>
+            <div class="border-2 px-3 py-1 text-center">
                 <p> Background Color</p>
-                <input type="color">
+                <input class="canvasColor border-2 border-slate-300" type="color" value="#ffffff">
             </div>
-            <div>
-                <p>Font Size</p>
-                <select name="" id="">
+            <div class=" border-2 px-3 py-1 text-center">
+                <p>Choose Font Size</p>
+                <select class="fontSize">
                     <option value="5">5px</option>
+                    <option value="7">7px</option>
+                    <option value="8">8px</option>
                     <option value="10">10px</option>
-                    <option value="15">15px</option>
-                    <option value="20">20px</option>
-                    <option value="25">25px</option>
+                    <option value="12">12px</option>
                 </select>
              </div>
         </div>
-        <canvas class="border-2" width="500" height="250"></canvas>
+      <div>  <canvas class="myCanvas border-2" width="800" height="450"></canvas></div>
+        <div class="flex gap-20  ">
+           <button class="clearButton border-2 px-3 py-1">Clear</button>
+           <button class="saveButton border-2  px-3 py-1">Save & Download</button>
+           
+        </div>
     </div>
+    <script>
+        const colorPicker=document.querySelector('.colorPicker');
+        const canvasColor=document.querySelector('.canvasColor');
+        const canvas=document.querySelector('.myCanvas');
+        const clearButton=document.querySelector('.clearButton');
+        const saveButton=document.querySelector('.saveButton');
+        const fontSize=document.querySelector('.fontSize');
+        const ctx=canvas.getContext('2d');
+       
+        ctx.fillStyle='white';
+        ctx.strokeStyle='black'
+
+        colorPicker.addEventListener('change',(e)=>{
+            ctx.strokeStyle=e.target.value;
+            
+        })
+
+        canvas.addEventListener('mousedown',(e)=>{
+            isDrawing =true;
+            lastX=event.offsetX;
+            lastY=event.offsetY;
+        })
+
+        canvas.addEventListener('mousemove',(e)=>{
+            if(isDrawing){
+                ctx.beginPath();
+                ctx.moveTo(lastX,lastY);
+                ctx.lineTo(event.offsetX,event.offsetY);
+                ctx.stroke();
+                lastX=event.offsetX;
+                lastY=event.offsetY;
+            }
+        })
+        canvas.addEventListener('mouseup',()=>{
+            isDrawing=false;
+        })
+        canvasColor.addEventListener('change',(e)=>{
+            ctx.fillStyle=e.target.value;
+            ctx.fillRect(0,0,800,450);
+        })
+        fontSize.addEventListener('change',(e)=>{
+            ctx.lineWidth=e.target.value;
+        })
+
+        clearButton.addEventListener('click',(e)=>{
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+        })
+
+        saveButton.addEventListener('click',()=>{
+            localStorage.setItem('canvasContents',canvas.toDataURL());
+            let link=document.createElement('a');
+            link.download='my-canvas.png';
+            link.href=canvas.toDataURL();
+            link.click();
+        })
+    </script>
 </body>
 </html>
